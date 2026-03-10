@@ -1,0 +1,29 @@
+# 1. Por que a conversão para escala de cinza é importante?
+#
+# Porque a maioria dos algoritmos de segmentação trabalha com um único canal.
+# A imagem colorida tem 3 canais (R, G, B), o que aumenta o custo de processamento
+# sem necessariamente ajudar na tarefa de detectar objetos por forma.
+# Convertendo para cinza, a gente reduz os dados em 3x e ainda mantém
+# toda a informação de contraste e forma que precisamos.
+# 2. O que o histograma revela sobre a imagem?
+#
+# O histograma mostra a distribuição dos tons de cinza da imagem.
+# Com ele dá pra ver se a imagem está muito escura, muito clara ou com bom contraste.
+# Quando o histograma tem dois picos bem separados, significa que fundo e objeto
+# têm tons bem diferentes — o que facilita muito a segmentação.
+# O Otsu inclusive usa essa lógica para escolher o melhor ponto de corte.
+# 3. Por que aplicar morfologia antes de detectar contornos?
+#
+# Porque o threshold deixa pequenos ruídos na imagem (pontinhos brancos
+# que não são objetos de verdade). Se a gente detectar contornos direto,
+# esses ruídos viram falsos positivos e a contagem fica errada.
+# A morfologia (fechamento) resolve isso: ela fecha buraquinhos dentro dos objetos
+# e apaga os pontinhos pequenos, deixando a imagem mais limpa pra detecção.
+# 4. Em qual cenário real esse sistema poderia ser aplicado?
+#
+# Controle de qualidade numa linha de produção de comprimidos.
+# Uma câmera fotografa a bandeja, o pipeline detecta e conta cada comprimido,
+# e o filtro de área identifica comprimidos quebrados (área menor que o esperado).
+# Isso substitui a inspeção manual, que é lenta e sujeita a erro humano.
+# Outros exemplos: contagem de células em microscopia, veículos em estacionamento,
+# frutas em colheita automatizada.
